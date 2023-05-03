@@ -1,22 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: hello-app
-  labels:
-    role: app
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      role: app
-  template:
-    metadata:
-      labels:
-        role: app
-    spec:
-      containers:
-      - name: app
-        image: ravi3177/kubernetesproject
-        resources:
-          requests:
-            cpu: 10m
+FROM centos:7.9.2009
+RUN yum install -y httpd \
+zip \
+unzip
+ADD https://www.free-css.com/assets/files/free-css-templates/download/page279/jack-and-rose.zip /var/www/html/
+WORKDIR /var/www/html
+RUN unzip jack-and-rose.zip
+RUN cp -rvf free-wedding-website-template/* .
+RUN rm -rf free-wedding-website-template jack-and-rose.zip
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+EXPOSE 80
